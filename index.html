@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Chatbot</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4B2B',
+                        secondary: '#FFB800',
+                        dark: '#1A1A1A',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light dark:bg-dark font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white dark:bg-dark shadow-md z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-2xl font-bold text-primary">RestaurantBot</div>
+            <div class="flex items-center space-x-4">
+                <button id="darkModeToggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                </button>
+                <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary">Menu</a>
+                <a href="#" class="text-gray-600 dark:text-gray-300 hover:text-primary">Reservations</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-12 bg-gradient-to-r from-primary to-secondary">
+        <div class="container mx-auto px-4 py-16 text-center text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Welcome to RestaurantBot</h1>
+            <p class="text-xl md:text-2xl mb-8">Your AI-powered dining companion</p>
+        </div>
+    </section>
+
+    <!-- Chatbot Container -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <!-- Chat Header -->
+            <div class="bg-primary text-white p-4 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3">
+                    <i class="fas fa-robot text-primary"></i>
+                </div>
+                <div>
+                    <h2 class="font-semibold">RestaurantBot</h2>
+                    <p class="text-sm opacity-80">Online • Ready to help</p>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="h-[500px] overflow-y-auto p-4 space-y-4">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Chat Input -->
+            <div class="border-t p-4 bg-gray-50 dark:bg-gray-700">
+                <div class="flex space-x-4">
+                    <input type="text" id="userInput" 
+                           class="flex-1 p-2 rounded-lg border dark:bg-gray-600 dark:border-gray-500 dark:text-white focus:outline-none focus:border-primary"
+                           placeholder="Type your message...">
+                    <button id="sendMessage" 
+                            class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/chatbot.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/reservation.js"></script>
+    <script src="js/payment.js"></script>
+</body>
+</html> 

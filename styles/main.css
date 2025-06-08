@@ -1,0 +1,238 @@
+/* Custom Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Chat Message Styles */
+.chat-message {
+    animation: fadeIn 0.3s ease-out;
+    transition: all 0.3s ease;
+}
+
+.chat-message:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bot-message {
+    background-color: #f3f4f6;
+    border-radius: 1rem 1rem 1rem 0;
+    padding: 1rem;
+    max-width: 80%;
+    margin-right: auto;
+    animation: slideInLeft 0.3s ease-out;
+}
+
+.user-message {
+    background-color: #FF4B2B;
+    color: white;
+    border-radius: 1rem 1rem 0 1rem;
+    padding: 1rem;
+    max-width: 80%;
+    margin-left: auto;
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Menu Card Styles */
+.menu-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #FF4B2B;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff6b4b;
+}
+
+/* Dark Mode Styles */
+.dark .bot-message {
+    background-color: #374151;
+    color: #f3f4f6;
+}
+
+/* Loading Animation */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    background: #f0f0f0;
+    border-radius: 18px;
+    margin: 8px 0;
+    display: inline-block;
+    animation: pulse 1.5s infinite;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #999;
+    margin: 0 2px;
+    animation: typing 1.4s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    30% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Enhanced input area */
+#userInput {
+    transition: all 0.3s ease;
+}
+
+#userInput:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 3px rgba(255, 75, 43, 0.2);
+}
+
+#sendMessage {
+    transition: all 0.2s ease;
+}
+
+#sendMessage:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 75, 43, 0.3);
+}
+
+#sendMessage:active {
+    transform: scale(0.98);
+}
+
+/* Dark mode enhancements */
+.dark .typing-indicator {
+    background: #374151;
+    color: #e5e7eb;
+}
+
+.dark .typing-indicator span {
+    background: #9ca3af;
+}
+
+.dark .menu-item-btn {
+    background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+    color: #f9fafb;
+}
+
+.dark .menu-item-btn:hover {
+    background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
+}
+
+/* Button Hover Effects */
+.hover-scale {
+    transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Form Input Styles */
+.form-input {
+    transition: border-color 0.2s ease-in-out;
+}
+
+.form-input:focus {
+    border-color: #FF4B2B;
+    box-shadow: 0 0 0 2px rgba(255, 75, 43, 0.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .bot-message, .user-message {
+        max-width: 90%;
+    }
+}
+
+/* Enhanced menu item buttons */
+.menu-item-btn {
+    transition: all 0.2s ease;
+    margin: 2px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(135deg, #ffe5b4 0%, #ffd700 100%);
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-item-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+}
+
+.menu-item-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+} 
