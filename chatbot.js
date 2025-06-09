@@ -416,17 +416,36 @@ class FoodieBotAI {
     }
 
     handleRestaurantSearch(intent) {
-        const restaurants = this.nearbyRestaurants.slice(0, 6); // Show top 6
-        
-        const restaurantList = restaurants.map(r => 
-            `🍽️ **${r.name}** (${r.rating}⭐)\n📍 ${r.location} • ${r.distance}\n🍴 ${r.cuisines.join(', ')}\n⏱️ ${r.deliveryTime} • ${r.priceRange}`
-        ).join('\n\n');
-        
-        return {
-            text: `Here are the top restaurants near you in ${this.currentLocation}:\n\n${restaurantList}\n\nTap on any restaurant to view their menu! 🍽️`,
-            action: 'show_restaurants',
-            data: restaurants
-        };
+        try {
+            // Sort restaurants by rating and distance
+            const sortedRestaurants = [...this.nearbyRestaurants].sort((a, b) => {
+                if (b.rating !== a.rating) {
+                    return b.rating - a.rating;
+                }
+                return parseFloat(a.distance) - parseFloat(b.distance);
+            });
+
+            const restaurantList = sortedRestaurants.map(r => 
+                `🍽️ **${r.name}** (${r.rating}⭐)\n` +
+                `📍 ${r.location} • ${r.distance}\n` +
+                `🍴 ${r.cuisines.join(', ')}\n` +
+                `⏱️ ${r.deliveryTime} • ${r.priceRange}\n` +
+                `🆔 ${r.id}`
+            ).join('\n\n');
+
+            return {
+                text: `Here are all the restaurants near you in ${this.currentLocation}:\n\n${restaurantList}\n\nTap on any restaurant to view their menu! 🍽️`,
+                action: 'show_restaurants',
+                data: sortedRestaurants
+            };
+        } catch (error) {
+            console.error('Error in restaurant search:', error);
+            return {
+                text: "I'm having trouble finding restaurants at the moment. Please try again.",
+                action: null,
+                data: null
+            };
+        }
     }
 
     handleCuisineSearch(intent) {
@@ -681,3 +700,4 @@ const chatbotAI = new FoodieBotAI();
 
 // Make it globally accessible
 window.chatbotAI = chatbotAI;
+

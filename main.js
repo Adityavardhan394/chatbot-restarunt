@@ -2,19 +2,48 @@
 
 class FoodieBotApp {
     constructor() {
+        // Initialize only if not already initialized
+        if (!window.foodieBotApp) {
+            this.initializeApp();
+            window.foodieBotApp = this;
+        }
+        return window.foodieBotApp;
+    }
+
+    initializeApp() {
         this.currentOrder = [];
         this.isTyping = false;
         this.conversationHistory = [];
         this.selectedRestaurant = null;
         this.currentLocation = "Nagaram, Dammiguda";
+        this.chatbotAI = null;
         this.init();
     }
 
     init() {
+        this.initializeChatbotAI();
         this.bindEvents();
         this.initializeWelcome();
         this.startBackgroundAnimations();
         this.initializeTheme();
+    }
+
+    initializeChatbotAI() {
+        try {
+            if (!window.chatbotAI) {
+                this.chatbotAI = new FoodieBotAI();
+                window.chatbotAI = this.chatbotAI;
+                console.log('Chatbot AI initialized successfully');
+            } else {
+                this.chatbotAI = window.chatbotAI;
+                console.log('Using existing Chatbot AI instance');
+            }
+        } catch (error) {
+            console.error('Error initializing Chatbot AI:', error);
+            // Create a fallback instance with empty data
+            this.chatbotAI = new FoodieBotAI();
+            window.chatbotAI = this.chatbotAI;
+        }
     }
 
     bindEvents() {
@@ -200,9 +229,27 @@ class FoodieBotApp {
     }
 
     async getAIResponse(userMessage) {
-        // Use the FoodieBotAI engine
-        const response = await chatbotAI.generateResponse(userMessage, this.conversationHistory);
-        return response;
+        try {
+            if (!this.chatbotAI) {
+                throw new Error('Chatbot AI not initialized');
+            }
+            
+            // Use the FoodieBotAI engine
+            const response = await this.chatbotAI.generateResponse(userMessage, this.conversationHistory);
+            
+            if (!response) {
+                throw new Error('No response from AI');
+            }
+            
+            return response;
+        } catch (error) {
+            console.error('Error getting AI response:', error);
+            return {
+                text: "I apologize, but I'm having trouble accessing the restaurant database. Please try again in a moment.",
+                action: null,
+                data: null
+            };
+        }
     }
 
     handleSpecialAction(action, data) {
@@ -228,10 +275,25 @@ class FoodieBotApp {
     }
 
     showRestaurantCards(restaurants) {
-        const restaurantsContainer = document.getElementById('restaurantsContainer');
-        const restaurantsGrid = document.getElementById('restaurantsGrid');
-        
-        if (restaurantsContainer && restaurantsGrid) {
+        try {
+            const restaurantsContainer = document.getElementById('restaurantsContainer');
+            const restaurantsGrid = document.getElementById('restaurantsGrid');
+            
+            if (!restaurantsContainer || !restaurantsGrid) {
+                throw new Error('Restaurant container elements not found');
+            }
+
+            if (!Array.isArray(restaurants) || restaurants.length === 0) {
+                throw new Error('No restaurants data available');
+            }
+
+            // Show the container
+            restaurantsContainer.classList.remove('hidden');
+            
+            // Clear existing content
+            restaurantsGrid.innerHTML = '';
+            
+            // Add restaurant cards
             restaurantsGrid.innerHTML = restaurants.map(restaurant => `
                 <div class="restaurant-card" data-id="${restaurant.id}">
                     <div class="restaurant-image">
@@ -264,11 +326,12 @@ class FoodieBotApp {
                     </div>
                 </div>
             `).join('');
-            
-            restaurantsContainer.classList.remove('hidden');
-            
-            // Scroll to restaurants section
-            restaurantsContainer.scrollIntoView({ behavior: 'smooth' });
+
+            // Add success message
+            this.addMessage(`Found ${restaurants.length} restaurants near you! 🍽️`, 'bot');
+        } catch (error) {
+            console.error('Error showing restaurant cards:', error);
+            this.addMessage("Sorry, I'm having trouble displaying the restaurants. Please try again.", 'bot');
         }
     }
 
@@ -804,10 +867,13 @@ const mainStyleSheet = document.createElement('style');
 mainStyleSheet.textContent = appStyles;
 document.head.appendChild(mainStyleSheet);
 
-// Initialize the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    window.foodieBotApp = new FoodieBotApp();
-});
+// Initialize the app only once
+let app;
+try {
+    app = new FoodieBotApp();
+} catch (error) {
+    console.error('Error initializing FoodieBot App:', error);
+}
 
 // Export for other modules
 if (typeof module !== 'undefined' && module.exports) {
