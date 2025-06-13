@@ -1,0 +1,26 @@
+{
+  "name": "restaurant-chatbot",
+  "version": "1.0.0",
+  "description": "AI-powered restaurant chatbot with SQL Server integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "mssql": "^9.1.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^6.0.1",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.5.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
